@@ -3,6 +3,7 @@ package com.jewelcse045.admindashboard.controller;
 
 import com.jewelcse045.admindashboard.model.Product;
 import com.jewelcse045.admindashboard.service.ProductServiceImp;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -30,6 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/get/products")
+    @HystrixCommand(fallbackMethod = "getFallBackProducts")
     public String getProducts(Model model){
 
         List<Product> products = productServiceImp.getProducts();
@@ -38,6 +41,16 @@ public class ProductController {
         return "product/product-list";
 
     }
+
+    public String getFallBackProducts(Model model){
+
+        List<Product> products = new ArrayList<>();
+
+        model.addAttribute("products",products);
+        return "product/product-list";
+
+    }
+
 
     @PostMapping("/store/product")
     public RedirectView save(@ModelAttribute("product") Product product){
@@ -51,7 +64,7 @@ public class ProductController {
         response = productServiceImp.storeProduct(product);
         System.out.println("Saving product => "+response);
 
-        return new RedirectView("/admin/get/products");
+        return new RedirectView("/admin/add/product");
     }
 
     @GetMapping("/product/remove/{id}")
