@@ -45,8 +45,8 @@ public class ProductController {
     }
 
     @GetMapping("/get/product")
-    public Optional<Product> getSingleProduct(@RequestParam String productId){
-        return productService.getProductById(productId);
+    public Optional<Product> getSingleProduct(@RequestParam String id){
+        return productService.getProductById(id);
     }
 
     @PostMapping("/update/product/{id}")

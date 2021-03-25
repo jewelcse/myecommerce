@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
 
-                <form th:action="@{/admin/product/update/{id}(id=${product.id})}" th:object="${product}" method="POST">
+                <form th:action="@{/admin/product/update/{id}(id=${product.productId})}" th:object="${product}" method="POST">
                     <div class="form-group">
                         <label for="productTitle">Product Title</label>
                         <input type="text"
@@ -24,29 +24,14 @@
                                name="productTitle"
                                placeholder="title goes here..">
                     </div>
-                    <div class="form-group">
-                        <label for="category">Current Category</label>
-
-<!--                        <input type="text" th:field="*{categoryTitle}">-->
-
-                        <select class="form-control" id="category"  th:field="*{categoryTitle}" name="category">
-
-
-                            <option  th:value="*{categoryTitle}" th:text="*{categoryTitle}" />
-<!--                            <option th:each="category : ${categories}" -->
-<!--                                    th:value="${category.categoryTitle}" -->
-<!--                                    th:text="${category.categoryTitle}"/>-->
-
-                        </select>
-                    </div>
 
                     <div class="form-group">
-                        <label for="productTitle">Product Img</label>
+                        <label for="productImage">Product Img</label>
                         <input type="text"
-                               th:field="*{productImagePath}"
+                               th:field="*{productImage}"
                                class="form-control"
-                               id="productImagePath"
-                               name="productImagePath"
+                               id="productImage"
+                               name="productImage"
                                placeholder="img path goes here..">
                     </div>
 
